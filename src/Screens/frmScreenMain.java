@@ -4,6 +4,15 @@
  */
 package Screens;
 
+import DataBaseController.DBController;
+import javax.swing.JOptionPane;
+import java.sql.*;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author nitz
@@ -26,25 +35,126 @@ public class frmScreenMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        TestingSelect = new javax.swing.JButton();
+        TestingInsert = new javax.swing.JButton();
+        jMenuBar1 = new javax.swing.JMenuBar();
+        jMenu1 = new javax.swing.JMenu();
+        jMenu2 = new javax.swing.JMenu();
+        jMenu3 = new javax.swing.JMenu();
+        jMenu4 = new javax.swing.JMenu();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setTitle("Stym");
+
+        TestingSelect.setText("Select");
+        TestingSelect.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TestingSelectActionPerformed(evt);
+            }
+        });
+
+        TestingInsert.setText("Insert");
+        TestingInsert.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                TestingInsertActionPerformed(evt);
+            }
+        });
+
+        jMenu1.setText("Arquivo");
+        jMenuBar1.add(jMenu1);
+
+        jMenu2.setText("Configurações");
+        jMenuBar1.add(jMenu2);
+
+        jMenu3.setText("Sobre");
+        jMenuBar1.add(jMenu3);
+
+        jMenu4.setText("Ajuda");
+        jMenuBar1.add(jMenu4);
+
+        setJMenuBar(jMenuBar1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 400, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(149, 149, 149)
+                .addComponent(TestingSelect)
+                .addGap(218, 218, 218)
+                .addComponent(TestingInsert)
+                .addContainerGap(939, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 300, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(87, 87, 87)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(TestingSelect)
+                    .addComponent(TestingInsert))
+                .addContainerGap(650, Short.MAX_VALUE))
         );
 
         pack();
+        setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
+
+    private void TestingSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestingSelectActionPerformed
+        showDataBase();
+    }//GEN-LAST:event_TestingSelectActionPerformed
+
+    private void TestingInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestingInsertActionPerformed
+        DBController database = new DBController("database.db");
+         
+        try {
+            database.dbConnect();
+            
+            database.insertUserDataBase("pia@ldas", "a", "b00", "asda");
+            
+            database.dbDisconnect();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }//GEN-LAST:event_TestingInsertActionPerformed
 
     /**
      * @param args the command line arguments
      */
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    // SHOW DATABASE
+    private void showDataBase(){
+        DBController database = new DBController("database.db");
+        
+        try {
+            database.dbConnect();
+            ResultSet response = database.selectBasicDataBase("SELECT * FROM users;");
+            
+            System.out.println(response);
+            
+            database.dbDisconnect();
+            
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
+    }
+    
+    
+    
+    
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -52,12 +162,7 @@ public class frmScreenMain extends javax.swing.JFrame {
          * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
          */
         try {
-            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-                if ("Nimbus".equals(info.getName())) {
-                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-                    break;
-                }
-            }
+            javax.swing.UIManager.setLookAndFeel(javax.swing.UIManager.getSystemLookAndFeelClassName());
         } catch (ClassNotFoundException ex) {
             java.util.logging.Logger.getLogger(frmScreenMain.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
         } catch (InstantiationException ex) {
@@ -75,8 +180,16 @@ public class frmScreenMain extends javax.swing.JFrame {
                 new frmScreenMain().setVisible(true);
             }
         });
+    
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton TestingInsert;
+    private javax.swing.JButton TestingSelect;
+    private javax.swing.JMenu jMenu1;
+    private javax.swing.JMenu jMenu2;
+    private javax.swing.JMenu jMenu3;
+    private javax.swing.JMenu jMenu4;
+    private javax.swing.JMenuBar jMenuBar1;
     // End of variables declaration//GEN-END:variables
 }
