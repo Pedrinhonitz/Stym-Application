@@ -35,126 +35,146 @@ public class frmScreenMain extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        TestingSelect = new javax.swing.JButton();
-        TestingInsert = new javax.swing.JButton();
-        jMenuBar1 = new javax.swing.JMenuBar();
-        jMenu1 = new javax.swing.JMenu();
-        jMenu2 = new javax.swing.JMenu();
-        jMenu3 = new javax.swing.JMenu();
-        jMenu4 = new javax.swing.JMenu();
+        btnEntrarConta = new javax.swing.JButton();
+        btnCriarConta = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtEmailLogin = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        pfldSenhaLogin = new javax.swing.JPasswordField();
+        jLabel3 = new javax.swing.JLabel();
+        textLoginInvalido = new javax.swing.JLabel();
+        txtLoginInvalid = new javax.swing.JTextField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
-        setTitle("Stym");
+        setTitle("Stym Login");
+        setResizable(false);
 
-        TestingSelect.setText("Select");
-        TestingSelect.addActionListener(new java.awt.event.ActionListener() {
+        btnEntrarConta.setText("Entrar");
+        btnEntrarConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TestingSelectActionPerformed(evt);
+                btnEntrarContaActionPerformed(evt);
             }
         });
 
-        TestingInsert.setText("Insert");
-        TestingInsert.addActionListener(new java.awt.event.ActionListener() {
+        btnCriarConta.setText("Criar Conta");
+        btnCriarConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                TestingInsertActionPerformed(evt);
+                btnCriarContaActionPerformed(evt);
             }
         });
 
-        jMenu1.setText("Arquivo");
-        jMenuBar1.add(jMenu1);
+        jLabel1.setText("E-mail");
 
-        jMenu2.setText("Configurações");
-        jMenuBar1.add(jMenu2);
+        jLabel2.setText("Senha");
 
-        jMenu3.setText("Sobre");
-        jMenuBar1.add(jMenu3);
-
-        jMenu4.setText("Ajuda");
-        jMenuBar1.add(jMenu4);
-
-        setJMenuBar(jMenuBar1);
+        txtLoginInvalid.setEditable(false);
+        txtLoginInvalid.setForeground(new java.awt.Color(255, 51, 51));
+        txtLoginInvalid.setText("  ");
+        txtLoginInvalid.setBorder(null);
+        txtLoginInvalid.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        txtLoginInvalid.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtLoginInvalidActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(149, 149, 149)
-                .addComponent(TestingSelect)
-                .addGap(218, 218, 218)
-                .addComponent(TestingInsert)
-                .addContainerGap(939, Short.MAX_VALUE))
+                .addGap(50, 50, 50)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 134, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 37, Short.MAX_VALUE)
+                        .addComponent(btnEntrarConta, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtEmailLogin)
+                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel2)
+                    .addComponent(pfldSenhaLogin)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(textLoginInvalido)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGap(300, 300, 300)
+                                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(txtLoginInvalid, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(76, 76, 76)))))
+                .addContainerGap(64, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(87, 87, 87)
+                .addGap(64, 64, 64)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(txtEmailLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(41, 41, 41)
+                .addComponent(jLabel2)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(pfldSenhaLogin, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 26, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(textLoginInvalido)
+                    .addComponent(txtLoginInvalid, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(TestingSelect)
-                    .addComponent(TestingInsert))
-                .addContainerGap(650, Short.MAX_VALUE))
+                    .addComponent(btnCriarConta)
+                    .addComponent(btnEntrarConta))
+                .addGap(43, 43, 43))
         );
 
         pack();
         setLocationRelativeTo(null);
     }// </editor-fold>//GEN-END:initComponents
 
-    private void TestingSelectActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestingSelectActionPerformed
-        showDataBase();
-    }//GEN-LAST:event_TestingSelectActionPerformed
-
-    private void TestingInsertActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_TestingInsertActionPerformed
+    // Verifica o E-mail e a Senha do Usuario para o LOGIN
+    private void btnEntrarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEntrarContaActionPerformed
         DBController database = new DBController("database.db");
-         
+        boolean check = false;
+        String email = txtEmailLogin.getText();
+        String senha = pfldSenhaLogin.getText();
+        frmScreenSendGame screenSendGame = new frmScreenSendGame();
+        
         try {
             database.dbConnect();
             
-            database.insertUserDataBase("pia@ldas", "a", "b00", "asda");
+            check = database.comparationQueryLogin(email, senha);
+            
+            if(check) {
+                screenSendGame.setVisible(true);
+                txtEmailLogin.setText("");
+                pfldSenhaLogin.setText("");        
+            }else {
+                txtLoginInvalid.setText(" E-mail ou Senha Inválidos!");
+                pfldSenhaLogin.setText("");
+            }
+            
             
             database.dbDisconnect();
         } catch (Exception e) {
             JOptionPane.showMessageDialog(this, e.getMessage());
         }
-    }//GEN-LAST:event_TestingInsertActionPerformed
+    }//GEN-LAST:event_btnEntrarContaActionPerformed
+    // Abre a Tela de Criar Conta
+    private void btnCriarContaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCriarContaActionPerformed
+        frmScreenCreatedAccount screenCreatedAccount = new frmScreenCreatedAccount();
+        screenCreatedAccount.setVisible(true);
+    }//GEN-LAST:event_btnCriarContaActionPerformed
+
+    private void txtLoginInvalidActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtLoginInvalidActionPerformed
+        
+    }//GEN-LAST:event_txtLoginInvalidActionPerformed
 
     /**
      * @param args the command line arguments
      */
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    // SHOW DATABASE
-    private void showDataBase(){
-        DBController database = new DBController("database.db");
-        
-        try {
-            database.dbConnect();
-            ResultSet response = database.selectBasicDataBase("SELECT * FROM users;");
-            
-            System.out.println(response);
-            
-            database.dbDisconnect();
-            
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
-        }
-    }
-    
-    
-    
-    
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -184,12 +204,14 @@ public class frmScreenMain extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton TestingInsert;
-    private javax.swing.JButton TestingSelect;
-    private javax.swing.JMenu jMenu1;
-    private javax.swing.JMenu jMenu2;
-    private javax.swing.JMenu jMenu3;
-    private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JButton btnCriarConta;
+    private javax.swing.JButton btnEntrarConta;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JPasswordField pfldSenhaLogin;
+    private javax.swing.JLabel textLoginInvalido;
+    private javax.swing.JTextField txtEmailLogin;
+    private javax.swing.JTextField txtLoginInvalid;
     // End of variables declaration//GEN-END:variables
 }
