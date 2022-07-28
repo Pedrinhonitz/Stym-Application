@@ -2,16 +2,20 @@ package DataBaseController;
 
 import java.io.File;
 import java.sql.*;
+import javax.swing.table.DefaultTableModel;
 
 public class DBController {
     
+    // Variaveis usadas na conexaão do Banco de Dados
     private String dbName;
     Connection dbConn;
     
+    // Construtor da Classe
     public DBController(String dbName) {
         this.dbName = dbName;
     }
     
+    // Conecta no Banco de Dados
     public void dbConnect() throws Exception{
         File f = new File(this.dbName);
         
@@ -20,14 +24,50 @@ public class DBController {
         }
         
         Class.forName("org.sqlite.JDBC");
-        System.out.println("jdbc:sqlite:" + this.dbName);
         this.dbConn = DriverManager.getConnection("jdbc:sqlite:" + this.dbName);
     }
     
+    // Desconecta do Banco de Dados
     public void dbDisconnect() throws SQLException{
         this.dbConn.close();   
     }
     
+    // Verifica se já existe o E-mail ou o Nickname do Usuario
+    public boolean comparationQueryCreatedAccount(String email, String nickname) throws Exception{
+        String sel = "SELECT count(1) FROM users WHERE email='" + email + "'" + " OR nickname='" + nickname + "'";
+        ResultSet rset = null;
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            rset = stmt.executeQuery(sel);
+            
+            if(stmt.executeQuery(sel).getInt("count(1)") == 0) {
+               return true;
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error When Selecting From Database: " + e.getMessage());
+        }
+        return false;
+    }
+    
+    // Verifica se o Usuario tem conta criada
+    public boolean comparationQueryLogin(String email, String password) throws Exception{
+        String sel = "SELECT count(1) FROM users WHERE email='" + email + "'" + " AND password='" + password + "'";
+        ResultSet rset = null;
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            rset = stmt.executeQuery(sel);
+            
+            if(stmt.executeQuery(sel).getInt("count(1)") == 1) {
+               return true;
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error When Selecting From Database: " + e.getMessage());
+        }
+        
+        return false;
+    }
+    
+    // Utilizavel para Qualquer Select dentro do Banco de dados
     public ResultSet selectBasicDataBase(String query) throws Exception{
         String sel = query;
         ResultSet rset = null;
@@ -42,6 +82,7 @@ public class DBController {
         return rset;
     }
    
+    // Utilizavel para Qualquer Insert dentro do Banco de dados
     public void insertBasicDataBase(String query) throws Exception{
         String ins = query;
         
@@ -56,6 +97,7 @@ public class DBController {
         }
     }
     
+    // Utilizavel para Qualquer Delete dentro do Banco de dados
     public void deleteBasicDataBase(String query) throws Exception{
         String ins = query;
         
@@ -70,6 +112,7 @@ public class DBController {
         }
     }
     
+    // Insere um novo usuario no Banco de Dados
     public void insertUserDataBase(String email, String password, String name, String nickname) throws Exception{
         String ins = "INSERT INTO users (email, password, name, nickname) VALUES (?, ?, ?, ?)";
         
@@ -88,6 +131,7 @@ public class DBController {
         }
     }
     
+    // Deleta um Usuario do Banco de Dados
     public void deleteUserDataBase(String email, String password, String name, String nickname) throws Exception{
         String ins = "DELETE FROM users WHERE email = (?) AND password = (?) AND name = (?), AND nickname = (?)";
         
