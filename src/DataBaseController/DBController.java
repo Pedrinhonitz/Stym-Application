@@ -67,6 +67,30 @@ public class DBController {
         return false;
     }
     
+    // Verifica se o Usuario tem conta criada
+    public boolean comparationQueryGame(int pkGame, String description, String sumary) throws Exception{        
+        String sel = "SELECT count(1) FROM products WHERE pkGame=(?) OR description=(?) OR sumary=(?);";
+        // ResultSet rset = null;
+        PreparedStatement stmt;
+
+        try {
+            stmt = this.dbConn.prepareStatement(sel);
+            stmt.setInt(1, pkGame);
+            stmt.setString(2, description);
+            stmt.setString(3, sumary);
+            stmt.executeUpdate();
+            
+            if(stmt.executeQuery(sel).getInt("count(1)") == 1) {
+               return false;
+            }
+        } catch (SQLException e) {
+            throw new Exception("Error When Selecting From Database: " + e.getMessage());
+        }
+        
+        return true;
+    }
+    
+    
     // Utilizavel para Qualquer Select dentro do Banco de dados
     public ResultSet selectBasicDataBase(String query) throws Exception{
         String sel = query;
@@ -147,6 +171,27 @@ public class DBController {
             
         }catch (SQLException e){
             throw new Exception("Error DELETE User Into Database: " + e.getMessage());
+        }
+    }
+    
+    
+    // Insere um novo Jogo no Banco de Dados
+    public void insertGameDataBase(int pkGame, double price, String description, String sumary) throws Exception{
+        
+        String ins = "INSERT INTO products (pkGame, preco, description, sumary) VALUES (?, ?, ?, ?)";
+        
+        System.out.println("SQL: " + ins);
+        PreparedStatement stmt;
+        
+        try{
+            stmt = this.dbConn.prepareStatement(ins);
+            stmt.setInt(1, pkGame);
+            stmt.setDouble(2, price);
+            stmt.setString(3, description);
+            stmt.setString(4, sumary);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            throw new Exception("Error Inserting Products Into Database: " + e.getMessage());
         }
     }
    
