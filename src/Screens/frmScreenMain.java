@@ -139,26 +139,34 @@ public class frmScreenMain extends javax.swing.JFrame {
         boolean check = false;
         String email = txtEmailLogin.getText();
         String senha = pfldSenhaLogin.getText();
-        frmScreenSendGame screenSendGame = new frmScreenSendGame();
+        frmMenu screenMenu = new frmMenu();
+        System.out.println(email);
         
-        try {
-            database.dbConnect();
-            
-            check = database.comparationQueryLogin(email, senha);
-            
-            if(check) {
-                screenSendGame.setVisible(true);
-                txtEmailLogin.setText("");
-                pfldSenhaLogin.setText("");        
-            }else {
-                txtLoginInvalid.setText(" E-mail ou Senha Inválidos!");
-                pfldSenhaLogin.setText("");
+        if(email.equals("root") && senha.equals("root")) {
+            frmScreenUserRoot rootScreen = new frmScreenUserRoot();
+            rootScreen.setVisible(true);
+            txtEmailLogin.setText("");
+            pfldSenhaLogin.setText(""); 
+        }else {
+            try {
+                database.dbConnect();
+
+                check = database.comparationQueryLogin(email, senha);
+
+                if(check) {
+                    screenMenu.setVisible(true);
+                    txtEmailLogin.setText("");
+                    pfldSenhaLogin.setText("");        
+                }else {
+                    txtLoginInvalid.setText(" E-mail ou Senha Inválidos!");
+                    pfldSenhaLogin.setText("");
+                }
+
+
+                database.dbDisconnect();
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(this, e.getMessage());
             }
-            
-            
-            database.dbDisconnect();
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, e.getMessage());
         }
     }//GEN-LAST:event_btnEntrarContaActionPerformed
     // Abre a Tela de Criar Conta
