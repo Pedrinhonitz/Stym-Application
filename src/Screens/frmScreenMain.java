@@ -139,6 +139,7 @@ public class frmScreenMain extends javax.swing.JFrame {
         boolean check = false;
         String email = txtEmailLogin.getText();
         String senha = pfldSenhaLogin.getText();
+       
         frmMenu screenMenu = new frmMenu();
         System.out.println(email);
         
@@ -153,7 +154,13 @@ public class frmScreenMain extends javax.swing.JFrame {
 
                 check = database.comparationQueryLogin(email, senha);
 
-                if(check) {
+                if(check) { 
+                    try {
+                        User usuario = new User(email, senha);
+                        // usuario
+                    } catch (Exception ex) {
+                        Logger.getLogger(frmScreenMain.class.getName()).log(Level.SEVERE, null, ex);
+                    }
                     screenMenu.setVisible(true);
                     txtEmailLogin.setText("");
                     pfldSenhaLogin.setText("");        
