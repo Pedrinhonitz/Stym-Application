@@ -5,6 +5,7 @@
 package Screens;
 
 import DataBaseController.DBController;
+import Screens.frmScreenSendGame;
 import java.sql.ResultSet;
 import java.util.logging.Level;
 import java.util.logging.Logger;
