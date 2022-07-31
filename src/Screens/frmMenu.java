@@ -5,6 +5,8 @@
 package Screens;
 
 import DataBaseController.DBController;
+import Screens.frmCart;
+import Screens.frmScreenProduct;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import java.util.logging.Logger;
