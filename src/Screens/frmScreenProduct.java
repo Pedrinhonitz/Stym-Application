@@ -4,7 +4,12 @@
  */
 package Screens;
 
+import DataBaseController.DBController;
+import java.sql.ResultSet;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.UIManager;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
@@ -17,6 +22,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
      */
     public frmScreenProduct() {
         initComponents();
+        carregarDados();
     }
 
     /**
@@ -31,7 +37,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jTextField2 = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProduto = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton1 = new javax.swing.JButton();
@@ -44,7 +50,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
 
         jTextField2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -63,7 +69,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
                 return canEdit [columnIndex];
             }
         });
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProduto);
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-desfazer-20.png"))); // NOI18N
         jButton2.setText("Voltar");
@@ -148,6 +154,35 @@ public class frmScreenProduct extends javax.swing.JFrame {
             }
         });
     }
+    
+ public void carregarDados(){
+      DBController database = new DBController("database.db");
+
+        try {
+            database.dbConnect();
+            
+            String query = "select * from products";
+
+            ResultSet produtos = database.selectBasicDataBase(query);
+            
+            DefaultTableModel model = new DefaultTableModel(new String[]{"Código", "Nome do jogo" , "Descrição do jogo", "Valor"}, 0);
+            
+            while (produtos.next()) {
+                //System.out.println("passou");
+                model.addRow(new Object[]{produtos.getInt("pkGame"), produtos.getDouble("preco"), produtos.getString("description"), produtos.getString("sumary")});
+            }
+            
+            tblProduto.setModel(model);
+            
+            //System.out.println(produtos.);
+
+            
+            database.dbDisconnect();
+           
+        } catch (Exception ex) {
+            Logger.getLogger(frmScreenSendGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+ }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
@@ -155,7 +190,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTable tblProduto;
     // End of variables declaration//GEN-END:variables
 }

@@ -4,9 +4,13 @@
  */
 package Screens;
 
+import DataBaseController.DBController;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-
+import java.util.logging.Logger;
+import java.sql.*;
+import java.util.logging.Level;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author angemydelson
@@ -21,6 +25,8 @@ public class frmMenu extends javax.swing.JFrame {
     public frmMenu() {
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
+//        frmScreenProduct prod = new frmScreenProduct();
+//        prod.carregarDados();
     }
 
     
@@ -135,8 +141,12 @@ public class frmMenu extends javax.swing.JFrame {
     }//GEN-LAST:event_jButton1ActionPerformed
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        
         frmScreenProduct produto = new frmScreenProduct();
         produto.setVisible(true);
+        
+        frmScreenProduct prod = new frmScreenProduct();
+        prod.carregarDados();
     }//GEN-LAST:event_jButton2ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
