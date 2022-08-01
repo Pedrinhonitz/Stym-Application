@@ -18,6 +18,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class frmScreenProduct extends javax.swing.JFrame {
 
+    public static String search;
     /**
      * Creates new form frmScreenProduct
      */
@@ -25,7 +26,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
         initComponents();
         carregarDados();
     }
-
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -36,12 +37,12 @@ public class frmScreenProduct extends javax.swing.JFrame {
     private void initComponents() {
 
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        jtfPesquisar = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
         tblProduto = new javax.swing.JTable();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton1 = new javax.swing.JButton();
+        btnPesquisar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Produto");
@@ -49,7 +50,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
 
         jLabel2.setText("Descrição de jogo");
 
-        jTextField2.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        jtfPesquisar.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
 
         tblProduto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -79,8 +80,13 @@ public class frmScreenProduct extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-carrinho-de-compras-carregado-20.png"))); // NOI18N
         jButton3.setText("Adicionar no carrinho");
 
-        jButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-pesquisar-20.png"))); // NOI18N
-        jButton1.setText("Pesquisar");
+        btnPesquisar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-pesquisar-20.png"))); // NOI18N
+        btnPesquisar.setText("Pesquisar");
+        btnPesquisar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPesquisarActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -100,9 +106,9 @@ public class frmScreenProduct extends javax.swing.JFrame {
                         .addComponent(jButton3)
                         .addGap(68, 68, 68))
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 512, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(61, 61, 61))))
         );
         layout.setVerticalGroup(
@@ -112,8 +118,8 @@ public class frmScreenProduct extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(jtfPesquisar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnPesquisar))
                 .addGap(37, 37, 37)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 300, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(46, 46, 46)
@@ -125,6 +131,14 @@ public class frmScreenProduct extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnPesquisarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPesquisarActionPerformed
+        
+//        frmScreenProduct prod = new frmScreenProduct();
+        
+//        search = jtfPesquisar.getText();
+        carregarDados();
+    }//GEN-LAST:event_btnPesquisarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -162,18 +176,29 @@ public class frmScreenProduct extends javax.swing.JFrame {
         try {
             database.dbConnect();
             
-            String query = "select * from products";
-
-            ResultSet produtos = database.selectBasicDataBase(query);
+            String query;
+//            search = null;
+            search = jtfPesquisar.getText();
+           
+            if (search != null) {
+                System.out.println("Angemydelson");
+                query = "select * from products where description LIKE '%"+search+"%'";
+                
+            } else {
+                query = "select * from products";
+            }
             
+            ResultSet produtos = database.selectBasicDataBase(query);
+                        
             DefaultTableModel model = new DefaultTableModel(new String[]{"Código", "Nome do jogo" , "Descrição do jogo", "Valor"}, 0);
             
             while (produtos.next()) {
-                //System.out.println("passou");
                 model.addRow(new Object[]{produtos.getInt("pkGame"), produtos.getDouble("preco"), produtos.getString("description"), produtos.getString("sumary")});
             }
             
             tblProduto.setModel(model);
+            
+            
             
             //System.out.println(produtos.);
 
@@ -186,12 +211,12 @@ public class frmScreenProduct extends javax.swing.JFrame {
  }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnPesquisar;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jtfPesquisar;
     private javax.swing.JTable tblProduto;
     // End of variables declaration//GEN-END:variables
 }
