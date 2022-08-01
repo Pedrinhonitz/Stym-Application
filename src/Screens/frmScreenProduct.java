@@ -193,7 +193,7 @@ public class frmScreenProduct extends javax.swing.JFrame {
             DefaultTableModel model = new DefaultTableModel(new String[]{"Código", "Nome do jogo" , "Descrição do jogo", "Valor"}, 0);
             
             while (produtos.next()) {
-                model.addRow(new Object[]{produtos.getInt("pkGame"), produtos.getDouble("preco"), produtos.getString("description"), produtos.getString("sumary")});
+                model.addRow(new Object[]{produtos.getInt("pkGame"), produtos.getString("sumary"), produtos.getString("description"), produtos.getDouble("preco")});
             }
             
             tblProduto.setModel(model);
