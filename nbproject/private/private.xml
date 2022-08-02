@@ -4,9 +4,12 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/nitz/NetBeansProjects/Stym/src/Screens/frmScreenSendGame.java</file>
+            <file>file:/home/nitz/NetBeansProjects/Stym/src/Screens/User.java</file>
             <file>file:/home/nitz/NetBeansProjects/Stym/src/DataBaseController/DBController.java</file>
             <file>file:/home/nitz/NetBeansProjects/Stym/src/Screens/frmScreenUserRoot.java</file>
             <file>file:/home/nitz/NetBeansProjects/Stym/src/Screens/frmScreenMain.java</file>
+            <file>file:/home/nitz/NetBeansProjects/Stym/src/Screens/frmMenu.java</file>
+            <file>file:/home/nitz/NetBeansProjects/Stym/src/Screens/frmScreenProduct.java</file>
         </group>
     </open-files>
 </project-private>

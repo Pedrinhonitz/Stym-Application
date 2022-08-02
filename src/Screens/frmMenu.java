@@ -4,23 +4,34 @@
  */
 package Screens;
 
+import DataBaseController.DBController;
+import Screens.frmCart;
+import Screens.frmScreenProduct;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
-
+import java.util.logging.Logger;
+import java.sql.*;
+import java.util.logging.Level;
+import javax.swing.table.DefaultTableModel;
 /**
  *
  * @author angemydelson
  */
 
 public class frmMenu extends javax.swing.JFrame {
-
-    /**
-     * Creates new form frmMenu
-     */
-    
-    public frmMenu() {
+    private String email;
+    public frmMenu(String email) {
+        this.email = email;
         setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
+    }
+
+    private frmMenu() {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+    
+    public String getEmail() {
+        return this.email;
     }
 
     
@@ -31,7 +42,7 @@ public class frmMenu extends javax.swing.JFrame {
         jButton1 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        btnProduct = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
@@ -62,11 +73,11 @@ public class frmMenu extends javax.swing.JFrame {
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-desligar-64.png"))); // NOI18N
         jButton3.setText("Sair");
 
-        jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-stocks-64.png"))); // NOI18N
-        jButton2.setText("Produto");
-        jButton2.addActionListener(new java.awt.event.ActionListener() {
+        btnProduct.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-stocks-64.png"))); // NOI18N
+        btnProduct.setText("Produto");
+        btnProduct.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton2ActionPerformed(evt);
+                btnProductActionPerformed(evt);
             }
         });
 
@@ -104,7 +115,7 @@ public class frmMenu extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnProduct, javax.swing.GroupLayout.PREFERRED_SIZE, 204, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(12, 12, 12)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
@@ -118,7 +129,7 @@ public class frmMenu extends javax.swing.JFrame {
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
+                    .addComponent(btnProduct, javax.swing.GroupLayout.DEFAULT_SIZE, 238, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
@@ -134,12 +145,16 @@ public class frmMenu extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jButton1ActionPerformed
 
-    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton2ActionPerformed
+    private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
+
+        frmScreenProduct produto = new frmScreenProduct();
+        produto.setVisible(true);
+
+        produto.carregarDados();
+    }//GEN-LAST:event_btnProductActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
-        // TODO add your handling code here:
+
         frmCart cart = new frmCart();
         cart.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
@@ -178,8 +193,8 @@ public class frmMenu extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnProduct;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton5;
     private javax.swing.JMenu jMenu1;
