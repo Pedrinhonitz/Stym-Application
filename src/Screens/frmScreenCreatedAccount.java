@@ -46,6 +46,7 @@ public class frmScreenCreatedAccount extends javax.swing.JFrame {
         setTitle("Stym Create Account");
         setResizable(false);
 
+        btnCancelarCriarConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-desfazer-20.png"))); // NOI18N
         btnCancelarCriarConta.setText("Cancelar");
         btnCancelarCriarConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -53,6 +54,7 @@ public class frmScreenCreatedAccount extends javax.swing.JFrame {
             }
         });
 
+        btnConfirmarCriarConta.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8-salvar-20.png"))); // NOI18N
         btnConfirmarCriarConta.setText("Confirmar");
         btnConfirmarCriarConta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -137,7 +139,7 @@ public class frmScreenCreatedAccount extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(pfldSenhaCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(txtNicknameCriarConta, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 78, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnConfirmarCriarConta)
                     .addComponent(btnCancelarCriarConta))

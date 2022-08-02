@@ -62,8 +62,18 @@ public class frmScreenUserRoot extends javax.swing.JFrame {
         jLabel4.setText("Preço do Jogo");
 
         btnCancelarCadastroJogo.setText("Cancelar");
+        btnCancelarCadastroJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCancelarCadastroJogoActionPerformed(evt);
+            }
+        });
 
         btnDeletarJogo.setText("Deletar");
+        btnDeletarJogo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeletarJogoActionPerformed(evt);
+            }
+        });
 
         btnInserirJogo.setText("Inserir");
         btnInserirJogo.addActionListener(new java.awt.event.ActionListener() {
@@ -134,20 +144,20 @@ public class frmScreenUserRoot extends javax.swing.JFrame {
 
     private void btnInserirJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnInserirJogoActionPerformed
         DBController database = new DBController("database.db");
-
+        
         int pkGame = Integer.parseInt(txtPkGame.getText());
         double price = Double.parseDouble(txtPrecoJogo.getText());
         String description = txtNomeGame.getText();
         String sumary = txtaSumario.getText();
         boolean check = false;
-
+        
         try {
+            database.dbConnect();
             check = database.comparationQueryGame(pkGame, description, sumary);
+            database.dbDisconnect();
             if(check) {
                 database.dbConnect();
-                
                 database.insertGameDataBase(pkGame, price, description, sumary);
-
                 database.dbDisconnect();
             }else {
                 JOptionPane.showMessageDialog(this, "Jogo Já Cadastrado!");
@@ -156,6 +166,29 @@ public class frmScreenUserRoot extends javax.swing.JFrame {
             Logger.getLogger(frmScreenSendGame.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_btnInserirJogoActionPerformed
+
+    private void btnCancelarCadastroJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCancelarCadastroJogoActionPerformed
+        this.dispose();
+    }//GEN-LAST:event_btnCancelarCadastroJogoActionPerformed
+
+    private void btnDeletarJogoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeletarJogoActionPerformed
+        DBController database = new DBController("database.db");
+        
+        int pkGame = Integer.parseInt(txtPkGame.getText());
+        String description = txtNomeGame.getText();
+        
+        try { 
+            database.dbConnect();
+
+            database.deleteGame(pkGame, description);
+
+            database.dbDisconnect();
+        } catch (Exception ex) {
+            Logger.getLogger(frmScreenSendGame.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+    }//GEN-LAST:event_btnDeletarJogoActionPerformed
 
     /**
      * @param args the command line arguments

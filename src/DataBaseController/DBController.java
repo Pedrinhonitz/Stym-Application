@@ -67,18 +67,31 @@ public class DBController {
         return false;
     }
     
+    public void deleteGame(int pkGame, String description) throws Exception {
+        String ins = "DELETE FROM products WHERE pkGame=" + pkGame +  " AND description='" + description + "';";
+      
+        PreparedStatement stmt;
+        
+        try{
+            System.out.println("SQL: " + ins);
+            stmt = this.dbConn.prepareStatement(ins);
+            stmt.executeUpdate();
+            
+        }catch (SQLException e){
+            throw new Exception("Error Delete Into Database: " + e.getMessage());
+        }
+    }
+    
     // Verifica se o Usuario tem conta criada
     public boolean comparationQueryGame(int pkGame, String description, String sumary) throws Exception{        
-        String sel = "SELECT count(1) FROM products WHERE pkGame=(?) OR description=(?) OR sumary=(?);";
-        // ResultSet rset = null;
-        PreparedStatement stmt;
-
+        String sel = "SELECT count(1) FROM products WHERE pkGame=" + pkGame + " OR description='" + description + "' OR sumary='"  + sumary + "';";
+        
+        // String sel = "SELECT count(1) FROM users WHERE email='" + email + "'" + " AND password='" + password + "'";
+        ResultSet rset = null;
+       
         try {
-            stmt = this.dbConn.prepareStatement(sel);
-            stmt.setInt(1, pkGame);
-            stmt.setString(2, description);
-            stmt.setString(3, sumary);
-            stmt.executeUpdate();
+            Statement stmt = this.dbConn.createStatement();
+            rset = stmt.executeQuery(sel);
             
             if(stmt.executeQuery(sel).getInt("count(1)") == 1) {
                return false;
@@ -89,6 +102,7 @@ public class DBController {
         
         return true;
     }
+      
     
     
     // Utilizavel para Qualquer Select dentro do Banco de dados
@@ -178,8 +192,9 @@ public class DBController {
     // Insere um novo Jogo no Banco de Dados
     public void insertGameDataBase(int pkGame, double price, String description, String sumary) throws Exception{
         
-        String ins = "INSERT INTO products (pkGame, preco, description, sumary) VALUES (?, ?, ?, ?)";
-        
+        String ins;
+        ins = "INSERT INTO products(pkGame, preco, description, sumary) VALUES (?, ?, ?, ?)";
+        System.out.println("Entrou");
         System.out.println("SQL: " + ins);
         PreparedStatement stmt;
         

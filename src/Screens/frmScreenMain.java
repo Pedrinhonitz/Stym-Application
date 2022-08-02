@@ -140,9 +140,6 @@ public class frmScreenMain extends javax.swing.JFrame {
         String email = txtEmailLogin.getText();
         String senha = pfldSenhaLogin.getText();
        
-        frmMenu screenMenu = new frmMenu();
-        System.out.println(email);
-        
         if(email.equals("root") && senha.equals("root")) {
             frmScreenUserRoot rootScreen = new frmScreenUserRoot();
             rootScreen.setVisible(true);
@@ -155,9 +152,11 @@ public class frmScreenMain extends javax.swing.JFrame {
                 check = database.comparationQueryLogin(email, senha);
 
                 if(check) { 
+                    frmMenu screenMenu = new frmMenu(email);
                     try {
                         User usuario = new User(email, senha);
-                        // usuario
+                        System.out.println("EMAIL: " + usuario.getEmail());
+                        System.out.println("Senha: " + usuario.getPassword());
                     } catch (Exception ex) {
                         Logger.getLogger(frmScreenMain.class.getName()).log(Level.SEVERE, null, ex);
                     }
