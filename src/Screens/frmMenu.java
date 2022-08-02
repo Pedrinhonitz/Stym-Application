@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package Screens;
 
 import DataBaseController.DBController;
@@ -13,15 +9,14 @@ import java.util.logging.Logger;
 import java.sql.*;
 import java.util.logging.Level;
 import javax.swing.table.DefaultTableModel;
-/**
- *
- * @author angemydelson
- */
 
 public class frmMenu extends javax.swing.JFrame {
     private String email;
+    private int idUser;
+    
     public frmMenu(String email) {
         this.email = email;
+        this.idUser = buscarIdUser(email);
         // setExtendedState(JFrame.MAXIMIZED_BOTH);
         initComponents();
     }
@@ -34,6 +29,19 @@ public class frmMenu extends javax.swing.JFrame {
         return this.email;
     }
 
+    private int buscarIdUser(String email){
+        DBController db = new DBController("database.db");
+        int id = 0;
+        try {
+            db.dbConnect();
+            id = db.buscarIdPorEmail(email);
+            db.dbDisconnect();
+        } catch (Exception e) {
+            System.out.println("Deu ruim galera!" + e.getMessage());
+        }
+        System.out.println(id);
+        return id;
+    }
     
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -153,7 +161,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void btnProductActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnProductActionPerformed
 
-        frmScreenProduct produto = new frmScreenProduct();
+        frmScreenProduct produto = new frmScreenProduct(this.email);
         produto.setVisible(true);
 
         produto.carregarDados(false);
@@ -161,7 +169,7 @@ public class frmMenu extends javax.swing.JFrame {
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
 
-        frmCart cart = new frmCart();
+        frmCart cart = new frmCart(this.idUser);
         cart.setVisible(true);
     }//GEN-LAST:event_jButton5ActionPerformed
 
@@ -169,15 +177,8 @@ public class frmMenu extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_jButton3ActionPerformed
 
-    /**
-     * @param args the command line arguments
-     */
     public static void main(String args[]) {
-        /* Set the Nimbus look and feel */
-        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-         */
+        
         try {
             javax.swing.UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
                   

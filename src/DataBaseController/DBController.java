@@ -3,6 +3,7 @@ package DataBaseController;
 import java.io.File;
 import java.sql.*;
 import javax.swing.table.DefaultTableModel;
+import java.util.Arrays;
 
 public class DBController {
     
@@ -102,9 +103,7 @@ public class DBController {
         
         return true;
     }
-      
-    
-    
+     
     // Utilizavel para Qualquer Select dentro do Banco de dados
     public ResultSet selectBasicDataBase(String query) throws Exception{
         String sel = query;
@@ -188,7 +187,6 @@ public class DBController {
         }
     }
     
-    
     // Insere um novo Jogo no Banco de Dados
     public void insertGameDataBase(int pkGame, double price, String description, String sumary) throws Exception{
         
@@ -209,5 +207,124 @@ public class DBController {
             throw new Exception("Error Inserting Products Into Database: " + e.getMessage());
         }
     }
-   
+    
+    // Busca os jogos que estão no carrinho do usuario pelo id do usuario logado.
+    public ResultSet jogosDoCarrinho(int pkUser) throws Exception {
+        String ins = "SELECT * FROM cart WHERE pkUser = (" + pkUser + ")";
+        ResultSet result = null;
+        
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar jogos no carrinho: " + e.getMessage());
+        }
+        
+        return result;
+    }
+    
+    // Busca o valor dos produtos que estão no carrinho de um determinado usuario.
+    public ResultSet valorDoCarrinho(int pkUser) throws Exception {
+        String ins = "SELECT value FROM cart WHERE pkUser = (" + pkUser + ")";
+        ResultSet result = null;
+        
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar valor dos jogos no carrinho: " + e.getMessage());
+        }
+        
+        return result;
+    }
+
+    // Busca id do usuario pelo seu email.
+    public int buscarIdPorEmail(String email) throws Exception {
+        String ins = "SELECT rowid FROM users WHERE email = '"+ email + "'";
+        ResultSet result = null;
+        
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar id do usuario: " + e.getMessage());
+        }
+        
+        return result.getInt("rowid");
+    }
+    
+    // Busca informações do produto e se o produto existe pelo seu pkGame.
+    public String [] buscarJogo(int pkGame) throws Exception {
+        String ins = "SELECT preco, description FROM products WHERE pkGame = " + pkGame;
+        ResultSet result = null;
+        
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar produto pelo seu pkGame: " + e.getMessage());
+        }
+        
+        return new String[] {result.getString("description"), result.getString("preco")};
+    }
+    
+    // Inserir jogo no carrinho.
+    public void inserirJogoNoCarrinho(int pkUser, int pkGame, String name, double value) throws Exception {
+        String ins;
+        ins = "INSERT INTO cart (name, pkUser, pkGame, value) VALUES (?, ?, ?, ?)";
+        PreparedStatement stmt;
+        
+        try{
+            stmt = this.dbConn.prepareStatement(ins);
+            stmt.setString(1, name);
+            stmt.setInt(2, pkUser);
+            stmt.setInt(3, pkGame);
+            stmt.setDouble(4, value);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            throw new Exception("Erro ao inserir produto no carrinho: " + e.getMessage());
+        }
+    }
+    
+    // Busca o produto pelo seu id_produto e retorna o id do usuario que é o dono desse produto.
+    public int buscaProdutoPorId(int id) throws Exception {
+        String ins = "SELECT pkUser FROM cart WHERE id_produto = '"+ id + "'";
+        ResultSet result = null;
+        
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar produto por id: " + e.getMessage());
+        }
+        
+        return result.getInt("pkUser");
+    }
+    
+    // Remove o produto pelo seu id_produto.
+    public void removerProduto(int idProduto) throws Exception {
+        String ins = "DELETE FROM cart WHERE id_produto = '" + idProduto + "'";
+        PreparedStatement stmt;
+        try {
+            stmt = this.dbConn.prepareStatement(ins);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Erro remover produto do carrinho: " + e.getMessage());
+        }
+    }
+    
+    // Busca valor do cupom pelo seu nome.
+    public int buscaCupom(String nomeCupom) throws Exception {
+        String ins = "SELECT valor FROM desconto WHERE nome = '"+ nomeCupom + "'";
+        ResultSet result = null;
+        
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+        } catch (Exception e) {
+            throw new Exception("Erro ao buscar produto por id: " + e.getMessage());
+        }
+        
+        return result.getInt("valor");
+    }
 }
