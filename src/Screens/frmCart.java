@@ -2,6 +2,9 @@ package Screens;
 
 import DataBaseController.DBController;
 import java.sql.ResultSet;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -44,15 +47,17 @@ public class frmCart extends javax.swing.JFrame {
     
     private void calcularTotal(){
         DBController db = new DBController("database.db");
-        this.subTotal = 0;
+        List<Double> lista = new ArrayList<>();
         try {
             db.dbConnect();
             
             ResultSet result = db.valorDoCarrinho(this.idUser);
             
             while(result.next()){
-                this.subTotal += Double.parseDouble(result.getString("value"));
+                lista.add(Double.parseDouble(result.getString("value")));
             }
+
+            this.subTotal = lista.stream().reduce(0.0, (acum, e) -> acum + e);
             
             db.dbDisconnect();
             
@@ -354,6 +359,7 @@ public class frmCart extends javax.swing.JFrame {
             calculaCupom();
             edtIdProduto.setText("");
         } else {
+            edtIdProduto.setText("");
             JOptionPane.showMessageDialog(this, "Código invalido!");
         }  
     }//GEN-LAST:event_btnRemoverCarrinhoActionPerformed

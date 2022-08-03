@@ -338,6 +338,7 @@ public class DBController {
         return result.getInt("valor");
     }
     
+    // Verifica se o usuario ja possui esse produto no carrinho.
     public boolean verificaIdJogo(int idJogo, int idUser) throws Exception{
         String ins = "SELECT pkGame FROM cart WHERE pkGame = '"+ idJogo + "' AND pkUser = '" + idUser + "'";
         ResultSet result = null;
@@ -357,6 +358,7 @@ public class DBController {
         return response;
     }
     
+    // Limpa todos os produtos que estão no carrinho do usuario.
     public void limparCarrinho(int idUser) throws Exception{
         String ins = "DELETE FROM cart WHERE pkUser = '" + idUser + "'";
         PreparedStatement stmt;
