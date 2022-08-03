@@ -369,4 +369,18 @@ public class DBController {
             throw new Exception("Erro ao limpar o carrinho: " + e.getMessage());
         }
     }
+    
+    public void inserirCupom(String name, int porcentagem) throws Exception {
+        String ins = "INSERT INTO desconto (nome, valor) VALUES (?, ?)";
+        PreparedStatement stmt;
+        
+        try{
+            stmt = this.dbConn.prepareStatement(ins);
+            stmt.setString(1, name);
+            stmt.setInt(2, porcentagem);
+            stmt.executeUpdate();
+        }catch (SQLException e){
+            throw new Exception("Erro ao inserir produto no carrinho: " + e.getMessage());
+        }
+    }
 }
