@@ -257,15 +257,21 @@ public class DBController {
     public String [] buscarJogo(int pkGame) throws Exception {
         String ins = "SELECT preco, description FROM products WHERE pkGame = " + pkGame;
         ResultSet result = null;
+        String[] response = null;
         
         try {
             Statement stmt = this.dbConn.createStatement();
             result = stmt.executeQuery(ins);
+            
+            while(result.next()){
+                response = new String[] {result.getString("description"), result.getString("preco")};
+            }
+            
         } catch (Exception e) {
             throw new Exception("Erro ao buscar produto pelo seu pkGame: " + e.getMessage());
         }
         
-        return new String[] {result.getString("description"), result.getString("preco")};
+        return response;
     }
     
     // Inserir jogo no carrinho.
@@ -290,15 +296,19 @@ public class DBController {
     public int buscaProdutoPorId(int id) throws Exception {
         String ins = "SELECT pkUser FROM cart WHERE id_produto = '"+ id + "'";
         ResultSet result = null;
+        int response = 0;
         
         try {
             Statement stmt = this.dbConn.createStatement();
             result = stmt.executeQuery(ins);
+            while(result.next()){
+                response = result.getInt("pkUser");
+            }
         } catch (Exception e) {
             throw new Exception("Erro ao buscar produto por id: " + e.getMessage());
         }
         
-        return result.getInt("pkUser");
+        return response;
     }
     
     // Remove o produto pelo seu id_produto.
@@ -326,5 +336,35 @@ public class DBController {
         }
         
         return result.getInt("valor");
+    }
+    
+    public boolean verificaIdJogo(int idJogo, int idUser) throws Exception{
+        String ins = "SELECT pkGame FROM cart WHERE pkGame = '"+ idJogo + "' AND pkUser = '" + idUser + "'";
+        ResultSet result = null;
+        boolean response = false;
+        try {
+            Statement stmt = this.dbConn.createStatement();
+            result = stmt.executeQuery(ins);
+            while(result.next()){
+                if(result.getInt("pkGame") == idJogo){
+                    response = true;
+                }
+            }
+        } catch (Exception e) {
+            throw new Exception("Erro ao verificar jogo por id: " + e.getMessage());
+        }
+        
+        return response;
+    }
+    
+    public void limparCarrinho(int idUser) throws Exception{
+        String ins = "DELETE FROM cart WHERE pkUser = '" + idUser + "'";
+        PreparedStatement stmt;
+        try {
+            stmt = this.dbConn.prepareStatement(ins);
+            stmt.executeUpdate();
+        } catch (Exception e) {
+            throw new Exception("Erro ao limpar o carrinho: " + e.getMessage());
+        }
     }
 }

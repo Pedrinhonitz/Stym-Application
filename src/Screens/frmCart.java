@@ -132,6 +132,17 @@ public class frmCart extends javax.swing.JFrame {
         }
     }
     
+    private void limparCarrinho(int idUser) throws Exception{
+        DBController db = new DBController("database.db");
+        try {
+            db.dbConnect();
+            db.limparCarrinho(idUser);
+            db.dbDisconnect();
+        } catch (Exception e) {
+            throw new Exception(e.getMessage());
+        }
+    }
+    
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -360,6 +371,15 @@ public class frmCart extends javax.swing.JFrame {
 
     private void btnComprarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnComprarActionPerformed
         // TODO add your handling code here:
+        try {
+            limparCarrinho(this.idUser);
+            listarProdutos();
+            calcularTotal();
+            calculaCupom();
+            JOptionPane.showMessageDialog(this, "Compra efetuada com sucesso!");
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
+        }
     }//GEN-LAST:event_btnComprarActionPerformed
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

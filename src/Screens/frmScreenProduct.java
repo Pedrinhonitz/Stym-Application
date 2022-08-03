@@ -174,20 +174,27 @@ public class frmScreenProduct extends javax.swing.JFrame {
         }
 
         String[] dataJogo = buscarInformacoesJogo(codigoDoProduto);
+        
+        
 
         try {
             if(dataJogo == null){
-                throw new Exception("Deu ruim");
+                throw new Exception("Produto não existe!");
             }
+            if(verificaItemNoCarrinho(codigoDoProduto, this.idUser)){
+                throw new Exception("Produto já esta inserido no carrinho!");
+            }
+            String nomeDoJogo = dataJogo[0];
+            double precoDoJogo = Double.parseDouble(dataJogo[1]);
+
+            inserirNoCarrinho(this.idUser, codigoDoProduto, nomeDoJogo, precoDoJogo);
+            
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(this, "Codigo invalido!");
+            JOptionPane.showMessageDialog(this, "Codigo invalido: " + e.getMessage());
 
         }
 
-        String nomeDoJogo = dataJogo[0];
-        double precoDoJogo = Double.parseDouble(dataJogo[1]);
-
-        inserirNoCarrinho(this.idUser, codigoDoProduto, nomeDoJogo, precoDoJogo);
+        
     }//GEN-LAST:event_btnAddCarrinhoActionPerformed
     
     public static void main(String args[]) {
@@ -287,6 +294,20 @@ public class frmScreenProduct extends javax.swing.JFrame {
         } catch (Exception e) {
             System.out.println("Deu ruim galera!" + e.getMessage());
         }
+    }
+    
+    private boolean verificaItemNoCarrinho(int idJogo, int idUser){
+        DBController db = new DBController("database.db");
+        boolean response = false;
+        try {
+            db.dbConnect();
+            response = db.verificaIdJogo(idJogo, idUser);
+            db.dbDisconnect();
+        } catch (Exception e) {
+            System.out.println("Deu ruim galera!" + e.getMessage());
+        }
+        
+        return response;
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
